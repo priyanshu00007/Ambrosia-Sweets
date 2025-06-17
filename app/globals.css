@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #d4af37;
+  --cream: #fdf6e3;
+  --rose: #f4c2c2;
+  --brown: #8b4513;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: linear-gradient(135deg, #fdf6e3 0%, #faf0e6 100%);
+  }
+
+  /* Improve focus visibility for accessibility */
+  *:focus {
+    outline: 2px solid #d97706;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:from-yellow-700 hover:to-yellow-600 hover:shadow-lg transform hover:-translate-y-1 focus:ring-4 focus:ring-yellow-300;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-yellow-600 text-yellow-600 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-yellow-600 hover:text-white focus:ring-4 focus:ring-yellow-300;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-yellow-600 to-rose-400 bg-clip-text text-transparent;
+  }
+
+  /* Loading animations */
+  .loading-pulse {
+    animation: loadingPulse 2s ease-in-out infinite;
+  }
+
+  .loading-bounce {
+    animation: loadingBounce 1.4s ease-in-out infinite both;
+  }
+
+  .loading-spin {
+    animation: loadingSpin 1s linear infinite;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bounce-in {
+  animation: bounceIn 0.5s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.6s ease-out;
+}
+
+@keyframes cartBounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes loadingPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes loadingBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loadingSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: pageSlideIn 0.3s ease-out;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles for better SEO */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gradient {
+    background: none;
+    color: #8b4513;
+  }
+}
