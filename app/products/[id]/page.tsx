@@ -1,252 +1,207 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { Star, ShoppingCart, Heart, Minus, Plus } from "lucide-react"
-import { type Product, useCart } from "@/contexts/CartContext"
-import { notFound } from "next/navigation"
+import type React from "react"
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  const [product, setProduct] = useState<Product | null>(null)
-  const [quantity, setQuantity] = useState(1)
-  const [activeTab, setActiveTab] = useState("description")
-  const { addToCart } = useCart()
+import { useState } from "react"
+import { Mail, Phone, MapPin, Clock, Send } from "lucide-react"
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`/api/admin/products/${params.id}`)
-        if (!response.ok) {
-          notFound()
-          return
-        }
-        const data = await response.json()
-        setProduct(data)
-      } catch (error) {
-        console.error("Error fetching product:", error)
-        notFound()
-      }
-    }
+export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  })
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-    fetchProduct()
-  }, [params.id])
-
-  if (!product) {
-    return <div>Loading...</div>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
   }
 
-  const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product)
-    }
-    setQuantity(1)
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitted(true)
+      setFormData({ name: "", email: "", subject: "", message: "" })
+    }, 1000)
   }
-
-  const reviews = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      rating: 5,
-      comment: "Absolutely delicious! The quality is exceptional and the taste is authentic.",
-      date: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "Rajesh Kumar",
-      rating: 4,
-      comment: "Great product, fresh and well-packaged. Will definitely order again.",
-      date: "2024-01-10",
-    },
-    {
-      id: 3,
-      name: "Anita Patel",
-      rating: 5,
-      comment: "Perfect for gifting! Everyone loved these sweets at our celebration.",
-      date: "2024-01-05",
-    },
-  ]
 
   return (
     <div className="fade-in py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <div className="relative">
-            <Image
-              src={product.image || "/placeholder.svg"}
-              alt={product.name}
-              width={600}
-              height={600}
-              className="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-lg"
-            />
-            <div className="absolute top-4 right-4 bg-yellow-600 text-white px-3 py-1 rounded-full font-medium">
-              {product.category}
-            </div>
-          </div>
-
-          {/* Product Details */}
-          <div>
-            <h1 className="font-playfair text-3xl md:text-4xl font-bold text-brown mb-4">{product.name}</h1>
-
-            <div className="flex items-center mb-4">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.floor(product.rating) ? "text-yellow-400 fill-current" : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="ml-2 text-brown font-medium">{product.rating}</span>
-              <span className="ml-2 text-gray-600">({product.reviews} reviews)</span>
-            </div>
-
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-brown">₹{product.price}</span>
-              <span className="text-gray-600 ml-2">per kg</span>
-            </div>
-
-            <p className="text-gray-600 mb-6 text-lg leading-relaxed">{product.description}</p>
-
-            {/* Quantity Selector */}
-            <div className="flex items-center mb-6">
-              <span className="text-brown font-medium mr-4">Quantity:</span>
-              <div className="flex items-center border border-brown rounded-lg">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 hover:bg-yellow-50 transition-colors"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
-                <span className="px-4 py-2 font-medium">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-2 hover:bg-yellow-50 transition-colors">
-                  <Plus className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <button
-                onClick={handleAddToCart}
-                className="btn-primary flex items-center justify-center space-x-2 flex-1"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                <span>Add to Cart</span>
-              </button>
-              <button className="btn-secondary flex items-center justify-center space-x-2">
-                <Heart className="w-5 h-5" />
-                <span>Add to Wishlist</span>
-              </button>
-            </div>
-
-            {/* Product Features */}
-            <div className="border-t pt-6">
-              <h3 className="font-semibold text-brown mb-4">Product Features</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Made with premium quality ingredients</li>
-                <li>• Handcrafted by expert halwais</li>
-                <li>• No artificial colors or preservatives</li>
-                <li>• Fresh preparation on order</li>
-                <li>• Elegant packaging included</li>
-              </ul>
-            </div>
-          </div>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="font-playfair text-4xl md:text-5xl font-bold text-brown mb-4">
+            Get in <span className="text-gradient">Touch</span>
+          </h1>
+          <p className="text-xl text-brown/70 max-w-2xl mx-auto">
+            We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
         </div>
 
-        {/* Tabs Section */}
-        <div className="mt-16">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-8">
-              <button
-                onClick={() => setActiveTab("description")}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === "description"
-                    ? "border-yellow-600 text-yellow-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Description
-              </button>
-              <button
-                onClick={() => setActiveTab("ingredients")}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === "ingredients"
-                    ? "border-yellow-600 text-yellow-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Ingredients
-              </button>
-              <button
-                onClick={() => setActiveTab("reviews")}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === "reviews"
-                    ? "border-yellow-600 text-yellow-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Reviews ({product.reviews})
-              </button>
-            </nav>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact Information */}
+          <div>
+            <h2 className="font-playfair text-3xl font-bold text-brown mb-8">Contact Information</h2>
 
-          <div className="py-8">
-            {activeTab === "description" && (
-              <div className="prose max-w-none">
-                <p className="text-gray-600 text-lg leading-relaxed mb-4">{product.description}</p>
-                <p className="text-gray-600 leading-relaxed">
-                  Our {product.name} represents the perfect blend of traditional craftsmanship and premium ingredients.
-                  Each piece is carefully handcrafted by our master halwais who have perfected their art over
-                  generations. We use only the finest ingredients sourced from trusted suppliers across India to ensure
-                  authenticity and quality.
-                </p>
-              </div>
-            )}
-
-            {activeTab === "ingredients" && (
-              <div>
-                <h3 className="font-semibold text-brown mb-4">Premium Ingredients</h3>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-600">
-                  <li>• Pure Ghee (Clarified Butter)</li>
-                  <li>• Fresh Milk & Cream</li>
-                  <li>• Premium Nuts & Dry Fruits</li>
-                  <li>• Organic Jaggery</li>
-                  <li>• Aromatic Cardamom</li>
-                  <li>• Pure Saffron Strands</li>
-                  <li>• Rose Water</li>
-                  <li>• Silver Leaf (Varak)</li>
-                </ul>
-              </div>
-            )}
-
-            {activeTab === "reviews" && (
-              <div>
-                <div className="space-y-6">
-                  {reviews.map((review) => (
-                    <div key={review.id} className="border-b border-gray-200 pb-6">
-                      <div className="flex items-center mb-2">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < review.rating ? "text-yellow-400 fill-current" : "text-gray-300"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="ml-2 font-medium text-brown">{review.name}</span>
-                        <span className="ml-2 text-gray-500 text-sm">{review.date}</span>
-                      </div>
-                      <p className="text-gray-600">{review.comment}</p>
-                    </div>
-                  ))}
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-brown text-lg mb-1">Phone</h3>
+                  <p className="text-gray-600">+91 98765 43210</p>
+                  <p className="text-gray-600">+91 98765 43211</p>
                 </div>
               </div>
-            )}
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-gradient-to-r from-rose-400 to-rose-600 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-brown text-lg mb-1">Email</h3>
+                  <p className="text-gray-600">info@ambrosiasweets.com</p>
+                  <p className="text-gray-600">orders@ambrosiasweets.com</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-brown text-lg mb-1">Address</h3>
+                  <p className="text-gray-600">
+                    123 Sweet Street, Bandra West
+                    <br />
+                    Mumbai, Maharashtra 400050
+                    <br />
+                    India
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="bg-gradient-to-r from-rose-400 to-rose-600 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-brown text-lg mb-1">Business Hours</h3>
+                  <p className="text-gray-600">
+                    Monday - Saturday: 9:00 AM - 9:00 PM
+                    <br />
+                    Sunday: 10:00 AM - 8:00 PM
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Map Placeholder */}
+            <div className="mt-8 bg-gray-200 rounded-lg h-64 flex items-center justify-center">
+              <p className="text-gray-500">Interactive Map Coming Soon</p>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div>
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h2 className="font-playfair text-3xl font-bold text-brown mb-6">Send us a Message</h2>
+
+              {isSubmitted && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                  <p className="text-green-800 font-medium">Thank you for your message! We'll get back to you soon.</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                  <select
+                    name="subject"
+                    required
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors"
+                  >
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="order">Order Related</option>
+                    <option value="bulk">Bulk Orders</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="complaint">Complaint</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors resize-none"
+                    placeholder="Enter your message here..."
+                  />
+                </div>
+
+                <button type="submit" className="btn-primary w-full flex items-center justify-center space-x-2">
+                  <Send className="w-5 h-5" />
+                  <span>Send Message</span>
+                </button>
+              </form>
+            </div>
+
+            {/* FAQ Section */}
+            <div className="mt-8 bg-gradient-to-br from-cream to-rose-50 rounded-lg p-6">
+              <h3 className="font-semibold text-brown text-lg mb-4">Frequently Asked Questions</h3>
+              <div className="space-y-3 text-sm">
+                <div>
+                  <p className="font-medium text-brown">What are your delivery areas?</p>
+                  <p className="text-gray-600">We deliver across Mumbai and Pune. Other cities coming soon!</p>
+                </div>
+                <div>
+                  <p className="font-medium text-brown">How fresh are your sweets?</p>
+                  <p className="text-gray-600">All sweets are made fresh daily and delivered within 24 hours.</p>
+                </div>
+                <div>
+                  <p className="font-medium text-brown">Do you accept bulk orders?</p>
+                  <p className="text-gray-600">Yes! Contact us for special pricing on bulk orders for events.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

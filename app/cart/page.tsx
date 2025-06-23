@@ -35,8 +35,8 @@ export default function Cart() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="lg:col-span-2 ">
+            <div className="bg-white rounded-lg shadow-lg overflow-y-auto">
               {state.items.map((item) => (
                 <div key={item.id} className="p-6 border-b border-gray-200 last:border-b-0">
                   <div className="flex items-center space-x-4">
