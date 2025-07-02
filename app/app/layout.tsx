@@ -1,3 +1,4 @@
+
 import type React from "react"
 import type { Metadata } from "next"
 import { Playfair_Display, Poppins } from "next/font/google"
@@ -9,7 +10,6 @@ import Footer from "@/components/Footer"
 import LoadingScreen from "@/components/LoadingScreen"
 import ScrollToTop from "@/components/ScrollToTop"
 import ScrollRestoration from "@/components/ScrollRestoration"
-import ChatbotPopup from "@/components/ChatbotPopup"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -107,7 +107,6 @@ export default function RootLayout({
             <main className="min-h-screen">{children}</main>
             <Footer />
             <ScrollToTop />
-            <ChatbotPopup />
           </CartProvider>
         </AuthProvider>
       </body>

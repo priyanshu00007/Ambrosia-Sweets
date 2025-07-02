@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-40 transition-transform duration-300 ${isOpen ? '' : '-translate-y-full md:translate-y-0'}`}>
+      <nav className="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center">
@@ -121,52 +121,20 @@ export default function Navbar() {
           {isOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white rounded-lg shadow-lg mt-2">
-                <Link href="/" className="block px-3 py-2 text-brown hover:text-yellow-600" onClick={() => {
-                  setIsOpen(false)
-                  setTimeout(() => {
-                    document.querySelector('nav')?.classList.add('-translate-y-full')
-                    setTimeout(() => {
-                      document.querySelector('nav')?.classList.remove('-translate-y-full')
-                    }, 400)
-                  }, 0)
-                }}>
+                <Link href="/" className="block px-3 py-2 text-brown hover:text-yellow-600">
                   Home
                 </Link>
-                <Link href="/about" className="block px-3 py-2 text-brown hover:text-yellow-600" onClick={() => {
-                  setIsOpen(false)
-                  setTimeout(() => {
-                    document.querySelector('nav')?.classList.add('-translate-y-full')
-                    setTimeout(() => {
-                      document.querySelector('nav')?.classList.remove('-translate-y-full')
-                    }, 400)
-                  }, 0)
-                }}>
+                <Link href="/about" className="block px-3 py-2 text-brown hover:text-yellow-600">
                   About
                 </Link>
-                <Link href="/products" className="block px-3 py-2 text-brown hover:text-yellow-600" onClick={() => {
-                  setIsOpen(false)
-                  setTimeout(() => {
-                    document.querySelector('nav')?.classList.add('-translate-y-full')
-                    setTimeout(() => {
-                      document.querySelector('nav')?.classList.remove('-translate-y-full')
-                    }, 400)
-                  }, 0)
-                }}>
+                <Link href="/products" className="block px-3 py-2 text-brown hover:text-yellow-600">
                   Products
                 </Link>
-                <Link href="/contact" className="block px-3 py-2 text-brown hover:text-yellow-600" onClick={() => {
-                  setIsOpen(false)
-                  setTimeout(() => {
-                    document.querySelector('nav')?.classList.add('-translate-y-full')
-                    setTimeout(() => {
-                      document.querySelector('nav')?.classList.remove('-translate-y-full')
-                    }, 400)
-                  }, 0)
-                }}>
+                <Link href="/contact" className="block px-3 py-2 text-brown hover:text-yellow-600">
                   Contact
                 </Link>
                 {isAdmin && (
-                  <Link href="/admin" className="block px-3 py-2 text-rose-600 hover:text-rose-800 font-medium" onClick={() => setIsOpen(false)}>
+                  <Link href="/admin" className="block px-3 py-2 text-rose-600 hover:text-rose-800 font-medium">
                     Admin Panel
                   </Link>
                 )}

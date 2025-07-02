@@ -1,18 +1,14 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import LoginModal from "@/components/LoginModal"; // Assuming you have this
-import { useState } from "react";
-import { useCart } from "@/contexts/CartContext";
-import { CreditCard, Truck, Shield, CheckCircle } from "lucide-react";
+import type React from "react"
+
+import { useState } from "react"
+import { useCart } from "@/contexts/CartContext"
+import { CreditCard, Truck, Shield, CheckCircle } from "lucide-react"
 
 export default function Checkout() {
-  const { state, clearCart } = useCart();
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const FREE_DELIVERY_THRESHOLD = 3000;
-  const DELIVERY_CHARGE = 300;
-  const { user, showLoginModal, setShowLoginModal } = useAuth();
+  const { state, clearCart } = useCart()
+  const [orderPlaced, setOrderPlaced] = useState(false)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,57 +19,35 @@ export default function Checkout() {
     state: "",
     pincode: "",
     paymentMethod: "card",
-  });
+  })
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     // Simulate order processing
     setTimeout(() => {
-      setOrderPlaced(true);
-      clearCart();
-    }, 2000);
-  };
-  if (!user) {
-    return (
-      <div className="fade-in py-16 text-center">
-        <h1 className="font-playfair text-3xl font-bold text-brown mb-4">
-          Please Sign In to Checkout
-        </h1>
-        <button
-          className="btn-primary"
-          onClick={() => setShowLoginModal(true)}
-        >
-          Sign In
-        </button>
-        {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
-      </div>
-    );
+      setOrderPlaced(true)
+      clearCart()
+    }, 2000)
   }
+
   if (state.items.length === 0 && !orderPlaced) {
     return (
       <div className="fade-in py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-playfair text-3xl font-bold text-brown mb-4">
-            No Items to Checkout
-          </h1>
+          <h1 className="font-playfair text-3xl font-bold text-brown mb-4">No Items to Checkout</h1>
           <p className="text-gray-600 mb-8">
-            Your cart is empty. Add some delicious sweets before proceeding to
-            checkout.
+            Your cart is empty. Add some delicious sweets before proceeding to checkout.
           </p>
         </div>
       </div>
-    );
+    )
   }
 
   if (orderPlaced) {
@@ -81,12 +55,9 @@ export default function Checkout() {
       <div className="fade-in py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <CheckCircle className="w-24 h-24 text-green-600 mx-auto mb-6" />
-          <h1 className="font-playfair text-4xl font-bold text-brown mb-4">
-            Order Placed Successfully!
-          </h1>
+          <h1 className="font-playfair text-4xl font-bold text-brown mb-4">Order Placed Successfully!</h1>
           <p className="text-gray-600 mb-8 text-lg">
-            Thank you for your order. We'll start preparing your delicious
-            sweets right away.
+            Thank you for your order. We'll start preparing your delicious sweets right away.
           </p>
           <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
             <h3 className="font-semibold text-green-800 mb-2">What's Next?</h3>
@@ -99,15 +70,13 @@ export default function Checkout() {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <div className="fade-in py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-playfair text-3xl md:text-4xl font-bold text-brown mb-8">
-          Checkout
-        </h1>
+        <h1 className="font-playfair text-3xl md:text-4xl font-bold text-brown mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Checkout Form */}
@@ -115,14 +84,10 @@ export default function Checkout() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="font-semibold text-xl text-brown mb-4">
-                  Personal Information
-                </h2>
+                <h2 className="font-semibold text-xl text-brown mb-4">Personal Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
                     <input
                       type="text"
                       name="firstName"
@@ -133,9 +98,7 @@ export default function Checkout() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
                     <input
                       type="text"
                       name="lastName"
@@ -146,9 +109,7 @@ export default function Checkout() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                     <input
                       type="email"
                       name="email"
@@ -159,9 +120,7 @@ export default function Checkout() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
                     <input
                       type="tel"
                       name="phone"
@@ -176,14 +135,10 @@ export default function Checkout() {
 
               {/* Delivery Address */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="font-semibold text-xl text-brown mb-4">
-                  Delivery Address
-                </h2>
+                <h2 className="font-semibold text-xl text-brown mb-4">Delivery Address</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Address *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Address *</label>
                     <textarea
                       name="address"
                       required
@@ -195,9 +150,7 @@ export default function Checkout() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        City *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">City *</label>
                       <input
                         type="text"
                         name="city"
@@ -208,9 +161,7 @@ export default function Checkout() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        State *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">State *</label>
                       <input
                         type="text"
                         name="state"
@@ -221,9 +172,7 @@ export default function Checkout() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        PIN Code *
-                      </label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">PIN Code *</label>
                       <input
                         type="text"
                         name="pincode"
@@ -239,9 +188,7 @@ export default function Checkout() {
 
               {/* Payment Method */}
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="font-semibold text-xl text-brown mb-4">
-                  Payment Method
-                </h2>
+                <h2 className="font-semibold text-xl text-brown mb-4">Payment Method</h2>
                 <div className="space-y-3">
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -279,25 +226,16 @@ export default function Checkout() {
           {/* Order Summary */}
           <div>
             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-              <h2 className="font-playfair text-2xl font-bold text-brown mb-6">
-                Order Summary
-              </h2>
+              <h2 className="font-playfair text-2xl font-bold text-brown mb-6">Order Summary</h2>
 
               <div className="space-y-4 mb-6">
                 {state.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex justify-between items-center"
-                  >
+                  <div key={item.id} className="flex justify-between items-center">
                     <div>
                       <h4 className="font-medium text-brown">{item.name}</h4>
-                      <p className="text-sm text-gray-600">
-                        Qty: {item.quantity}
-                      </p>
+                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
-                    <span className="font-medium">
-                      ₹{(item.price * item.quantity).toFixed(2)}
-                    </span>
+                    <span className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
@@ -309,28 +247,16 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Delivery</span>
-                  {state.total >= FREE_DELIVERY_THRESHOLD ? (
-                    <span className="font-medium text-green-600">Free</span>
-                  ) : (
-                    <span className="font-medium text-brown">
-                      ₹{DELIVERY_CHARGE.toFixed(2)}
-                    </span>
-                  )}
+                  <span className="font-medium text-green-600">Free</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax</span>
-                  <span className="font-medium">
-                    ₹{(state.total * 0.05).toFixed(2)}
-                  </span>
+                  <span className="font-medium">₹{(state.total * 0.05).toFixed(2)}</span>
                 </div>
                 <div className="border-t pt-2">
                   <div className="flex justify-between">
-                    <span className="text-lg font-semibold text-brown">
-                      Total
-                    </span>
-                    <span className="text-lg font-bold text-brown">
-                      ₹{(state.total * 1.05).toFixed(2)}
-                    </span>
+                    <span className="text-lg font-semibold text-brown">Total</span>
+                    <span className="text-lg font-bold text-brown">₹{(state.total * 1.05).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -353,5 +279,5 @@ export default function Checkout() {
         </div>
       </div>
     </div>
-  );
+  )
 }
