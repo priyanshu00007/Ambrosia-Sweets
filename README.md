@@ -1,4 +1,4 @@
-# 🍴 Ambrosia – Modern Food Delivery Web App
+<img width="1895" height="870" alt="image" src="https://github.com/user-attachments/assets/35c6404c-09de-4004-a428-dd963422a066" /># 🍴 Ambrosia – Modern Food Delivery Web App
 
 Ambrosia is a fast, responsive, and modern food delivery web application built with **Next.js**, **Tailwind CSS**, and deployed via **Vercel**. It focuses on clean UI, mobile-first design, and performance optimization to deliver a smooth user experience.
 
@@ -76,7 +76,8 @@ Visit `http://localhost:3000` to view the app in your local environment.
 
 ## 📸 Screenshots
 
-*(Add UI screenshots here if available, or drop them into a `/screenshots` folder and link here.)*
+
+![1752295811402](https://github.com/user-attachments/assets/c16ff337-ac62-4fff-a6a5-4ed5f892ea2e)
 
 ---
 
