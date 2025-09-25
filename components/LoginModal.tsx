@@ -107,7 +107,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           <div className="text-center text-sm text-gray-600">
             <p className="mb-2">Demo Credentials:</p>
             <p>
-              <strong>Admin:</strong> admin@gmail.com / admin123
+              <strong>Admin:</strong> 
             </p>
             <p>
               <strong>User:</strong> Any email / min 6 chars password
